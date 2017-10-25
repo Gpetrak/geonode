@@ -494,12 +494,21 @@ def file_upload(filename, name=None, user=None, title=None, abstract=None,
         if len(regions_resolved) > 0:
             layer.regions.add(*regions_resolved)
 
+    saveAgain = False
+    
+    if charset != 'UTF-8':
+        layer.charset = charset
+        saveAgain = True
+
+    if saveAgain:
+        layer.save()
+
     return layer
 
 
 def upload(incoming, user=None, overwrite=False,
            keywords=(), category=None, regions=(),
-           skip=True, ignore_errors=True,
+           skip=True, ignore_errors=True, charset='UTF-8',
            verbosity=1, console=None, title=None, private=False):
     """Upload a directory of spatial data files to GeoNode
 
@@ -585,8 +594,8 @@ def upload(incoming, user=None, overwrite=False,
                                     keywords=keywords,
                                     category=category,
                                     regions=regions,
-                                    title=title
-                                    )
+                                    title=title,
+                                    charset=charset)
                 if not existed:
                     status = 'created'
                 else:

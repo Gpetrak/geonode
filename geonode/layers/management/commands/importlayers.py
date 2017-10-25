@@ -96,6 +96,13 @@ class Command(BaseCommand):
             default=False,
             action="store_true",
             help="Make layer viewable only to owner"
+        ),
+        make_option(
+            '-C',
+            '--charset',
+            dest='charset',
+            default='UTF-8',
+            help=("Specify the charset of the data")
         )
     )
 
@@ -108,6 +115,7 @@ class Command(BaseCommand):
         category = options.get('category', None)
         private = options.get('private', False)
         title = options.get('title', None)
+        charset = options.get('charset', 'UTF-8')
 
         if verbosity > 0:
             console = self.stdout
@@ -143,7 +151,8 @@ class Command(BaseCommand):
                 category=category,
                 regions=regions,
                 title=title,
-                private=private)
+                private=private,
+                charset=charset)
             output.extend(out)
 
         updated = [dict_['file']
