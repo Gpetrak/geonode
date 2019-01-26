@@ -32,6 +32,10 @@ from setuptools.command import easy_install
 from paver.easy import task, options, cmdopts, needs
 from paver.easy import path, sh, info, call_task
 from paver.easy import BuildFailure
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
+
 
 try:
     from geonode.settings import GEONODE_APPS
@@ -67,8 +71,8 @@ def grab(src, dest, name):
         else:
             urllib.urlretrieve(str(src), str(dest))
 
-GEOSERVER_URL = "http://build.geonode.org/geoserver/latest/geoserver.war"
-DATA_DIR_URL = "http://build.geonode.org/geoserver/latest/data.zip"
+GEOSERVER_URL = "https://build.geo-solutions.it/geonode/geoserver/latest/geoserver-2.7.4.war"
+DATA_DIR_URL = "https://build.geo-solutions.it/geonode/geoserver/latest/data-2.7.4.zip"
 JETTY_RUNNER_URL = ("http://repo2.maven.org/maven2/org/mortbay/jetty/jetty-runner/"
                     "8.1.8.v20121106/jetty-runner-8.1.8.v20121106.jar")
 
@@ -85,7 +89,7 @@ def setup_geoserver(options):
         download_dir.makedirs()
 
     geoserver_dir = path('geoserver')
-
+ 
     geoserver_bin = download_dir / os.path.basename(GEOSERVER_URL)
     jetty_runner = download_dir / os.path.basename(JETTY_RUNNER_URL)
 
@@ -108,8 +112,8 @@ def setup_geoserver(options):
 
 def _install_data_dir():
     target_data_dir = path('geoserver/data')
-    if target_data_dir.exists():
-        target_data_dir.rmtree()
+    #if target_data_dir.exists():
+    #    target_data_dir.rmtree()
 
     original_data_dir = path('geoserver/geoserver/data')
     justcopy(original_data_dir, target_data_dir)
