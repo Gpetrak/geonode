@@ -73,9 +73,8 @@ DATABASES = {
 TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
+# http://www.i18nguy.com/unicode/language-identifiers.htmlLANGUAGE_CODE = 'en'
 LANGUAGE_CODE = 'en'
-
 LANGUAGES = (
     ('en', 'English'),
     ('es', 'Español'),
@@ -390,7 +389,6 @@ MIDDLEWARE_CLASSES = (
     # 'geonode.middleware.PrintProxyMiddleware',
 )
 
-
 # Replacement of default authentication backend in order to support
 # permissions per object.
 AUTHENTICATION_BACKENDS = (
@@ -610,6 +608,8 @@ DEFAULT_MAP_CENTER = (0, 0)
 # maximum zoom is between 12 and 15 (for Google Maps, coverage varies by area)
 DEFAULT_MAP_ZOOM = 0
 
+BING_API_KEY="An6FQQQLHaSLdx-4xbJlKqwJgvzes-pnDrSv6eMimM5fsADIn1Vr6so5Y4S3Qja5"
+
 MAP_BASELAYERS = [{
     "source": {"ptype": "gxp_olsource"},
     "type": "OpenLayers.Layer",
@@ -624,6 +624,15 @@ MAP_BASELAYERS = [{
     "visibility": True,
     "fixed": True,
     "group": "background"
+} ,{
+    "source": {
+    "ptype":"gxp_bingsource",
+    "apiKey": BING_API_KEY
+    },
+    "group":"background",
+    "name":"Aerial",
+    "visibility": False,
+    "fixed": True,
 }]
 
 SOCIAL_BUTTONS = True
