@@ -20,6 +20,7 @@
 import os
 import re
 import html
+import json
 import math
 import uuid
 import logging
@@ -89,6 +90,19 @@ from geonode.storage.manager import storage_manager
 
 logger = logging.getLogger(__name__)
 
+GDI_DE_ROLE_LABEL_MAPPING = {
+    'Owner': 'owner',
+    'Point of Contact': 'pointOfContact',
+    'Metadata Author': 'author',
+    'Processor': 'processor',
+    'Publisher': 'publisher',
+    'Custodian': 'custodian',
+    'Distributor': 'distributor',
+    'Resource User': 'user',
+    'Resource Provider': 'resourceProvider',
+    'Originator': 'originator',
+    'Principal Investigator': 'principalInvestigator'
+}
 
 class ContactRole(models.Model):
     """
@@ -1454,6 +1468,25 @@ class ResourceBase(PolymorphicModel, PermissionLevelMixin, ItemBase):
                 description = f"{self.title} ({link.name} Format)"
                 links.append((self.title, description, _link_type, link.url))
         return links
+    
+    def pycsw_contacts(self):
+        """assemble contacts for pycsw"""
+        site_url = settings.SITEURL.rstrip("/") if settings.SITEURL.startswith("http") else settings.SITEURL
+        contact_roles = self.get_defined_multivalue_contact_roles()
+        if self.owner:
+            contact_roles['Owner'] = [self.owner]
+        contacts = []
+        for cont_lbl, cont_vals in contact_roles.items():
+            for cont in cont_vals:
+                contacts.append(
+                    {
+                        "individualname": cont.full_name_or_nick,
+                        "organization": cont.organization,
+                        "role": GDI_DE_ROLE_LABEL_MAPPING[cont_lbl],
+                        "url": urljoin(site_url, cont.get_absolute_url()),
+                    }
+                )
+        return json.dumps(contacts)
 
     @property
     def embed_url(self):
