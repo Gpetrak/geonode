@@ -90,7 +90,7 @@ from geonode.storage.manager import storage_manager
 
 logger = logging.getLogger(__name__)
 
-GDI_DE_ROLE_LABEL_MAPPING = {
+GMD_ROLE_LABEL_MAPPING = {
     'Owner': 'owner',
     'Point of Contact': 'pointOfContact',
     'Metadata Author': 'author',
