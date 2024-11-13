@@ -83,26 +83,12 @@ from geonode.security.permissions import VIEW_PERMISSIONS, OWNER_PERMISSIONS
 
 from geonode.notifications_helper import send_notification, get_notification_recipients
 from geonode.people import Roles
-from geonode.people.enumerations import ROLE_VALUES
+from geonode.people.enumerations import ROLE_VALUES, GMD_ROLE_LABEL_MAPPING
 
 from urllib.parse import urlsplit, urljoin
 from geonode.storage.manager import storage_manager
 
 logger = logging.getLogger(__name__)
-
-GMD_ROLE_LABEL_MAPPING = {
-    'Owner': 'owner',
-    'Point of Contact': 'pointOfContact',
-    'Metadata Author': 'author',
-    'Processor': 'processor',
-    'Publisher': 'publisher',
-    'Custodian': 'custodian',
-    'Distributor': 'distributor',
-    'Resource User': 'user',
-    'Resource Provider': 'resourceProvider',
-    'Originator': 'originator',
-    'Principal Investigator': 'principalInvestigator'
-}
 
 class ContactRole(models.Model):
     """
@@ -1482,7 +1468,7 @@ class ResourceBase(PolymorphicModel, PermissionLevelMixin, ItemBase):
                     {
                         "individualname": cont.full_name_or_nick,
                         "organization": cont.organization,
-                        "role": GDI_DE_ROLE_LABEL_MAPPING[cont_lbl],
+                        "role": GMD_ROLE_LABEL_MAPPING[cont_lbl],
                         "url": urljoin(site_url, cont.get_absolute_url()),
                     }
                 )
