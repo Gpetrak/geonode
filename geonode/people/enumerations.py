@@ -39,15 +39,15 @@ ROLE_VALUES = (
 )
 
 GMD_ROLE_LABEL_MAPPING = {
-    'Owner': 'owner',
-    'Point of Contact': 'pointOfContact',
-    'Metadata Author': 'author',
-    'Processor': 'processor',
-    'Publisher': 'publisher',
-    'Custodian': 'custodian',
-    'Distributor': 'distributor',
-    'Resource User': 'user',
-    'Resource Provider': 'resourceProvider',
-    'Originator': 'originator',
-    'Principal Investigator': 'principalInvestigator'
+    "Owner": "owner",
+    "Point of Contact": "pointOfContact",
+    "Metadata Author": "author",
+    "Processor": "processor",
+    "Publisher": "publisher",
+    "Custodian": "custodian",
+    "Distributor": "distributor",
+    "Resource User": "user",
+    "Resource Provider": "resourceProvider",
+    "Originator": "originator",
+    "Principal Investigator": "principalInvestigator",
 }
