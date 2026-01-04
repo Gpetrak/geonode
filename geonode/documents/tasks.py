@@ -76,7 +76,7 @@ doc_renderer = DocumentRenderer()
 @app.task(
     bind=True,
     name="geonode.documents.tasks.create_document_thumbnail",
-    queue="geonode",
+    queue="harvesting",
     expires=30,
     time_limit=600,
     acks_late=False,

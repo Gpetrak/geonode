@@ -75,7 +75,7 @@ def _get_param_value(_param, _input_value):
 @app.task(
     bind=True,
     base=FaultTolerantTask,
-    queue="geonode",
+    queue="harvesting",
     expires=30,
     time_limit=600,
     acks_late=False,
