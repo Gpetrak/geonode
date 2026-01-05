@@ -20,7 +20,6 @@ import os
 import logging
 
 from celery import Celery
-import geonode.resource.api.tasks
 
 # from celery.schedules import crontab
 
@@ -36,7 +35,7 @@ def _log(msg, *args):
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
 app.config_from_object("django.conf:settings", namespace="CELERY")
-app.autodiscover_tasks()
+app.autodiscover_tasks("geonode.resource.api")
 app.autodiscover_tasks(packages=["geonode.harvesting.harvesters"])
 
 """ CELERAY SAMPLE TASKS
