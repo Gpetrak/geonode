@@ -87,7 +87,8 @@ def harvesting_scheduler(self):
 
 @app.task(
     bind=True,
-    queue="default",
+    name="geonode.upload.import_orchestrator",
+    queue="geonode.upload.import_orchestrator",
     expires=30,
     time_limit=600,
     acks_late=False,

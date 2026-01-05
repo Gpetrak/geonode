@@ -75,8 +75,8 @@ def _get_param_value(_param, _input_value):
 @app.task(
     bind=True,
     base=FaultTolerantTask,
-    queue="default",
-    name="geonode.resource_service.dispatcher",
+    name="geonode.upload.import_orchestrator",
+    queue="geonode.upload.import_orchestrator",
     expires=30,
     time_limit=600,
     acks_late=False,
