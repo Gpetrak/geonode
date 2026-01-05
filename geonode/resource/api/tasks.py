@@ -75,7 +75,8 @@ def _get_param_value(_param, _input_value):
 @app.task(
     bind=True,
     base=FaultTolerantTask,
-    queue="harvesting",
+    queue="default",
+    name = "geonode.harvesting",
     expires=30,
     time_limit=600,
     acks_late=False,
@@ -95,6 +96,7 @@ def resouce_service_dispatcher(self, execution_id: str):
     with AcquireLock(execution_id) as lock:
         if lock.acquire() is True:
             try:
+                logger.info(f"Exec ID:{execution_id}")
                 _exec_request = ExecutionRequest.objects.filter(exec_id=execution_id)
                 if _exec_request.exists():
                     _request = _exec_request.get()

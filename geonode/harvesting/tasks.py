@@ -87,7 +87,7 @@ def harvesting_scheduler(self):
 
 @app.task(
     bind=True,
-    queue="harvesting",
+    queue="default",
     expires=30,
     time_limit=600,
     acks_late=False,
