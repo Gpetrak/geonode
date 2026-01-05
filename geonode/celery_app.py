@@ -20,6 +20,7 @@ import os
 import logging
 
 from celery import Celery
+import geonode.resource.api.tasks
 
 # from celery.schedules import crontab
 
