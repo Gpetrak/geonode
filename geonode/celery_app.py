@@ -35,8 +35,12 @@ def _log(msg, *args):
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
 app.config_from_object("django.conf:settings", namespace="CELERY")
-app.autodiscover_tasks("geonode.resource.api")
-app.autodiscover_tasks(packages=["geonode.harvesting.harvesters"])
+# Discover tasks safely
+app.autodiscover_tasks([
+    "geonode.resource.api",
+    "geonode.harvesting.harvesters",
+])
+# app.autodiscover_tasks(packages=["geonode.harvesting.harvesters"])
 
 """ CELERAY SAMPLE TASKS
 @app.on_after_configure.connect
