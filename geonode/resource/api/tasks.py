@@ -76,7 +76,7 @@ def _get_param_value(_param, _input_value):
     bind=True,
     base=FaultTolerantTask,
     queue="default",
-    name = "geonode.harvesting",
+    name="geonode.resource_service.dispatcher",
     expires=30,
     time_limit=600,
     acks_late=False,
@@ -93,6 +93,7 @@ def resouce_service_dispatcher(self, execution_id: str):
     A client is able to query the `status_url` endpoint in order to get the current `status` other than
     the `output_params`.
     """
+    logger.info(f"Before locking: Exec ID:{execution_id}")
     with AcquireLock(execution_id) as lock:
         if lock.acquire() is True:
             try:
