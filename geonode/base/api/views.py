@@ -969,7 +969,12 @@ class ResourceBaseViewSet(ApiPresetsInitializer, MultiLangViewMixin, DynamicMode
                 geonode_resource=resource,
                 input_params={"uuid": resource.uuid},
             )
-            resouce_service_dispatcher.apply_async(args=(str(_exec_request.exec_id),), expiration=30)
+            resouce_service_dispatcher.apply_async(
+                args=(str(_exec_request.exec_id),),
+                queue="geonode",        # force it to the correct queue
+                routing_key="geonode",  # optional but safe
+                expiration=30
+            )
             return Response(
                 {
                     "status": _exec_request.status,
