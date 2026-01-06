@@ -35,6 +35,8 @@ from geonode.tasks.tasks import AcquireLock, FaultTolerantTask
 from .utils import resolve_type_serializer
 from ..models import ExecutionRequest
 
+from celery import shared_task
+
 logger = logging.getLogger(__name__)
 
 
@@ -72,11 +74,10 @@ def _get_param_value(_param, _input_value):
     return _param_value
 
 
-@app.task(
+@shared_task(
     bind=True,
     base=FaultTolerantTask,
-    name="geonode.upload.import_orchestrator",
-    queue="geonode.upload.import_orchestrator",
+    queue="geonode",
     expires=30,
     time_limit=600,
     acks_late=False,
